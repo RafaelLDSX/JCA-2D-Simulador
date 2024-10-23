@@ -1,0 +1,8 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node1" href="$interfacelogic_1_1_cellular_automata_interface.html" title="interface used by SimuWindow.java so that it can execute CA instructions" alt="" coords="5,31,235,57"/>
+<area shape="rect" id="node2" href="$classmodels_1_1_c_a_g_p_u_model.html" title=" " alt="" coords="291,5,451,32"/>
+<area shape="rect" id="node3" href="$classmodels_1_1_simple_c_a_model.html" title=" " alt="" coords="283,56,460,83"/>
+<area shape="rect" id="node4" href="$classmodels_1_1_c_a_model_py.html" title=" " alt="" coords="548,31,696,57"/>
+<area shape="rect" id="node5" href="$classmodels_1_1_cellular_automata_model.html" title=" " alt="" coords="508,81,736,108"/>
+<area shape="rect" id="node6" href="$classmodels_1_1_game_of_life.html" title=" " alt="" coords="784,81,936,108"/>
+</map>

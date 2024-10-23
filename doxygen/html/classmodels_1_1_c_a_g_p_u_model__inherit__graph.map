@@ -1,0 +1,4 @@
+<map id="models.CAGPUModel" name="models.CAGPUModel">
+<area shape="rect" id="node1" title=" " alt="" coords="40,80,200,107"/>
+<area shape="rect" id="node2" href="$interfacelogic_1_1_cellular_automata_interface.html" title="interface used by SimuWindow.java so that it can execute CA instructions" alt="" coords="5,5,235,32"/>
+</map>

@@ -1,0 +1,6 @@
+<map id="models.GameOfLife" name="models.GameOfLife">
+<area shape="rect" id="node1" title=" " alt="" coords="44,229,196,256"/>
+<area shape="rect" id="node2" href="$classmodels_1_1_cellular_automata_model.html" title=" " alt="" coords="6,155,234,181"/>
+<area shape="rect" id="node3" href="$classmodels_1_1_simple_c_a_model.html" title=" " alt="" coords="31,80,209,107"/>
+<area shape="rect" id="node4" href="$interfacelogic_1_1_cellular_automata_interface.html" title="interface used by SimuWindow.java so that it can execute CA instructions" alt="" coords="5,5,235,32"/>
+</map>

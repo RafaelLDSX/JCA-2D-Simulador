@@ -1,0 +1,7 @@
+<map id="models.SimpleCAModel" name="models.SimpleCAModel">
+<area shape="rect" id="node1" title=" " alt="" coords="96,80,273,107"/>
+<area shape="rect" id="node3" href="$classmodels_1_1_c_a_model_py.html" title=" " alt="" coords="5,155,153,181"/>
+<area shape="rect" id="node4" href="$classmodels_1_1_cellular_automata_model.html" title=" " alt="" coords="177,155,405,181"/>
+<area shape="rect" id="node2" href="$interfacelogic_1_1_cellular_automata_interface.html" title="interface used by SimuWindow.java so that it can execute CA instructions" alt="" coords="70,5,299,32"/>
+<area shape="rect" id="node5" href="$classmodels_1_1_game_of_life.html" title=" " alt="" coords="215,229,367,256"/>
+</map>
