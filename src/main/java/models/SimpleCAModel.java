@@ -1,5 +1,8 @@
 package models;
 
+import java.io.File;
+import java.io.FileWriter;
+
 public class SimpleCAModel implements logic.CellularAutomataInterface {
 	protected static final int CLASS_STATE_NOT_DEFINED                  = -1;
 	protected static final int CLASS_STATE_INITIAL   					=  0;
@@ -104,5 +107,24 @@ public class SimpleCAModel implements logic.CellularAutomataInterface {
 	public String getLayerName(int i) {return "CURRENT STATE";} 
 	
 	public String getLogBasedOnLayer(int i) { return "LOG OF CURRENT STATE"; }
+	
+	public void saveState(String fileName) { 
+		try{
+			File save = new File(fileName + ".dat");
+			save.createNewFile();
+			FileWriter writer = new FileWriter(save);
+			for(int i = 0; i < mCellX; i++) {
+				for(int j = 0; j < mCellY; j++) {
+					writer.write(Integer.toString(mS0[i][j]));
+				}
+			}
+			writer.close();
+		} catch (Exception e){
+			System.out.println("Error saving state.");
+			e.printStackTrace();
+		}
+	}
+	
+	public void loadState() { }
 
 }

@@ -578,6 +578,8 @@ public class SimuWindow extends JInternalFrame{
                 	break;
                 	
                 case SAVE_STATE:
+                	String fileName = "placeholder";
+                	mCA.saveState(fileName);
                 	break;
                 	
                 //case 4:JOptionPane.showMessageDialog(null,"MENSAGEM AQUI","TITULO", JOptionPane.INFORMATION_MESSAGE);;break;
