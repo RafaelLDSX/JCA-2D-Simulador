@@ -62,11 +62,13 @@ import javax.swing.JOptionPane;
 
 
 public class SimuWindow extends JInternalFrame{
-	private static final int ITENS  			= 4;
+	private static final int ITENS  			= 6;
 	private static final int NEXT_STEP 			= 0;
 	private static final int RUN_CA       		= 1;
 	private static final int MODEL_CA_BG	    = 2;
 	private static final int INIT_CA     	    = 3;
+	private static final int SAVE_STATE     	= 4;
+	private static final int LOAD_STATE     	= 5;
 	private SimuWindow mPtr = null;
 	/*
 	private JButton mNext = null;
@@ -207,6 +209,20 @@ public class SimuWindow extends JInternalFrame{
         mMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F7, 0));
         mMenuItem.addActionListener(menuEvent);
         mMenuHash[NEXT_STEP] = mMenuItem.hashCode();
+        mMenu.add(mMenuItem);
+        this.setJMenuBar(mMenuBar);
+        
+        mMenuItem = new JMenuItem("load");
+        mMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F9, 0));
+        mMenuItem.addActionListener(menuEvent);
+        mMenuHash[LOAD_STATE] = mMenuItem.hashCode();
+        mMenu.add(mMenuItem);
+        this.setJMenuBar(mMenuBar);
+        
+        mMenuItem = new JMenuItem("save");
+        mMenuItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_F8, 0));
+        mMenuItem.addActionListener(menuEvent);
+        mMenuHash[SAVE_STATE] = mMenuItem.hashCode();
         mMenu.add(mMenuItem);
         this.setJMenuBar(mMenuBar);
 //--------------------------------------------------------------------------------------------------
@@ -556,6 +572,12 @@ public class SimuWindow extends JInternalFrame{
                 	mGUICA.setCellularAutomataModel(mCA);
                 	setTitle("Game of life model");
                 	*/
+                	break;
+                	
+                case LOAD_STATE:
+                	break;
+                	
+                case SAVE_STATE:
                 	break;
                 	
                 //case 4:JOptionPane.showMessageDialog(null,"MENSAGEM AQUI","TITULO", JOptionPane.INFORMATION_MESSAGE);;break;
