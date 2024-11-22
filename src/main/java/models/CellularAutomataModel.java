@@ -33,7 +33,7 @@ public class CellularAutomataModel extends SimpleCAModel {
 	 */
 	public CellularAutomataModel(int w, int h, String boundary) {
 		super(w, h);
-		this.mTotalStates = 2; //Set number of states in according to the model
+		this.maxCellStates = 2; //Set number of states in according to the model
 		this.mBoundary = new String(boundary);
 	}//public CellularAutomtaModel() {
 	
@@ -50,69 +50,69 @@ public class CellularAutomataModel extends SimpleCAModel {
 	 */
 	protected void periodicBoundary(int i, int j){
 		
-		if (i + 1 == mCellX && j + 1 == mCellY) {
-			se = mS0[0][0]; //ok
-		}else if (i + 1 == mCellX){
-			se = mS0[j+1][0];
-		}else if (j + 1 == mCellY) {
-			se = mS0[0][i+1];
+		if (i + 1 == this.width && j + 1 == this.height) {
+			se = this.grid0[0][0]; //ok
+		}else if (i + 1 == this.width){
+			se = this.grid0[j+1][0];
+		}else if (j + 1 == this.height) {
+			se = this.grid0[0][i+1];
 		}else {
-			se = mS0[j + 1][i + 1]; //ok
+			se = this.grid0[j + 1][i + 1]; //ok
 		}
 
 		
-		if (i - 1 < 0 && j + 1 == mCellY) {
-			sw = mS0[0][mCellX - 1]; //ok
+		if (i - 1 < 0 && j + 1 == this.height) {
+			sw = this.grid0[0][this.width - 1]; //ok
 		}else if (i - 1 < 0){
-			sw = mS0[j + 1][mCellX - 1];
-		}else if (j + 1 == mCellY) {
-			sw = mS0[0][i-1];
+			sw = this.grid0[j + 1][this.width - 1];
+		}else if (j + 1 == this.height) {
+			sw = this.grid0[0][i-1];
 		}else {
-			sw = mS0[j + 1][i - 1]; //ok
+			sw = this.grid0[j + 1][i - 1]; //ok
 		}
 
 		
-		if (i + 1 == mCellX && j - 1 < 0) {
-			ne = mS0[mCellY - 1][0];
+		if (i + 1 == this.width && j - 1 < 0) {
+			ne = this.grid0[this.height - 1][0];
 		}else if (j - 1 < 0){
-			ne = mS0[mCellY - 1][i + 1];
-		}else if (i + 1 == mCellX) {
-			ne = mS0[j - 1][0];
+			ne = this.grid0[this.height - 1][i + 1];
+		}else if (i + 1 == this.width) {
+			ne = this.grid0[j - 1][0];
 		}else {
-			ne = mS0[j - 1][i + 1];
+			ne = this.grid0[j - 1][i + 1];
 		}
 		
 		if (i - 1 < 0 && j - 1 < 0) {
-			nw = mS0[mCellY - 1][mCellX - 1];
+			nw = this.grid0[this.height - 1][this.width - 1];
 		}else if (i - 1 < 0){
-			nw = mS0[j - 1][mCellX - 1];
+			nw = this.grid0[j - 1][this.width - 1];
 		}else if (j - 1 < 0) {
-			nw = mS0[mCellY - 1][i - 1];
+			nw = this.grid0[this.height - 1][i - 1];
 		}else {
-			nw = mS0[j - 1][i - 1];
+			nw = this.grid0[j - 1][i - 1];
 		}
 		
 		
 		if (i - 1 < 0) {
-			w = mS0[j][mCellX - 1];
-			e = mS0[j][i + 1];
-		}else if (i + 1 == mCellX) {
-			w = mS0[j][i - 1];
-			e = mS0[j][0];
+			w = this.grid0[j][this.width - 1];
+			e = this.grid0[j][i + 1];
+		}else if (i + 1 == this.width) {
+			w = this.grid0[j][i - 1];
+			e = this.grid0[j][0];
 		}else {
-			w = mS0[j][i - 1];
-			e = mS0[j][i + 1];
+			w = this.grid0[j][i - 1];
+			e = this.grid0[j][i + 1];
 		}	
 		
 		if (j - 1 < 0) {
-			n = mS0[mCellY - 1][i];
-			s = mS0[j + 1][i];
-		}else if (j + 1 == mCellY) {
-			n = mS0[j - 1][i];
-			s = mS0[0][i];
+			n = this.grid0[this.height - 1][i];
+			s = this.grid0[j + 1][i];
+		}else if (j + 1 == this.height) {
+			n = this.grid0[j - 1][i];
+			s = this.grid0[0][i];
 		}else {
-			n = mS0[j - 1][i];
-			s = mS0[j + 1][i];
+			n = this.grid0[j - 1][i];
+			s = this.grid0[j + 1][i];
 		}
 	}//protected void periodicBoundary(int i, int j){
 	
@@ -124,69 +124,69 @@ public class CellularAutomataModel extends SimpleCAModel {
 	 */
 	protected void reflexiveBoundary(int i, int j){
 		
-		if (i + 1 == mCellX && j + 1 == mCellY) {
-			se = mS0[j][i];  
-		}else if (i + 1 == mCellX){
-			se = mS0[j][i];
-		}else if (j + 1 == mCellY) {
-			se = mS0[j][i];
+		if (i + 1 == this.width && j + 1 == this.height) {
+			se = this.grid0[j][i];  
+		}else if (i + 1 == this.width){
+			se = this.grid0[j][i];
+		}else if (j + 1 == this.height) {
+			se = this.grid0[j][i];
 		}else {
-			se = mS0[j + 1][i + 1];  
+			se = this.grid0[j + 1][i + 1];  
 		}
 
 		
-		if (i - 1 < 0 && j + 1 == mCellY) {
-			sw = mS0[j][i];  
+		if (i - 1 < 0 && j + 1 == this.height) {
+			sw = this.grid0[j][i];  
 		}else if (i - 1 < 0){
-			sw = mS0[j][i];
-		}else if (j + 1 == mCellY) {
-			sw = mS0[j][i];
+			sw = this.grid0[j][i];
+		}else if (j + 1 == this.height) {
+			sw = this.grid0[j][i];
 		}else {
-			sw = mS0[j + 1][i - 1];  
+			sw = this.grid0[j + 1][i - 1];  
 		}
 
 		
-		if (i + 1 == mCellX && j - 1 < 0) {
-			ne = mS0[j][i];
+		if (i + 1 == this.width && j - 1 < 0) {
+			ne = this.grid0[j][i];
 		}else if (j - 1 < 0){
-			ne = mS0[j][i];
-		}else if (i + 1 == mCellX) {
-			ne = mS0[j][i];
+			ne = this.grid0[j][i];
+		}else if (i + 1 == this.width) {
+			ne = this.grid0[j][i];
 		}else {
-			ne = mS0[j - 1][i + 1];
+			ne = this.grid0[j - 1][i + 1];
 		}
 		
 		if (i - 1 < 0 && j - 1 < 0) {
-			nw = mS0[j][i];
+			nw = this.grid0[j][i];
 		}else if (i - 1 < 0){
-			nw = mS0[j][i];
+			nw = this.grid0[j][i];
 		}else if (j - 1 < 0) {
-			nw = mS0[j][i];
+			nw = this.grid0[j][i];
 		}else {
-			nw = mS0[j - 1][i - 1];
+			nw = this.grid0[j - 1][i - 1];
 		}
 		
 		
 		if (i - 1 < 0) {
-			w = mS0[j][i + 1];
-			e = mS0[j][i + 1];
-		}else if (i + 1 == mCellX) {
-			w = mS0[j][i - 1];
-			e = mS0[j][i - 1];
+			w = this.grid0[j][i + 1];
+			e = this.grid0[j][i + 1];
+		}else if (i + 1 == this.width) {
+			w = this.grid0[j][i - 1];
+			e = this.grid0[j][i - 1];
 		}else {
-			w = mS0[j][i - 1];
-			e = mS0[j][i + 1];
+			w = this.grid0[j][i - 1];
+			e = this.grid0[j][i + 1];
 		}	
 		
 		if (j - 1 < 0) {
-			n = mS0[j + 1][i];
-			s = mS0[j + 1][i];
-		}else if (j + 1 == mCellY) {
-			n = mS0[j - 1][i];
-			s = mS0[j - 1][i];
+			n = this.grid0[j + 1][i];
+			s = this.grid0[j + 1][i];
+		}else if (j + 1 == this.height) {
+			n = this.grid0[j - 1][i];
+			s = this.grid0[j - 1][i];
 		}else {
-			n = mS0[j - 1][i];
-			s = mS0[j + 1][i];
+			n = this.grid0[j - 1][i];
+			s = this.grid0[j + 1][i];
 		}
 	}//protected void reflexiveBoundary(int i, int j){
 	
@@ -199,69 +199,69 @@ public class CellularAutomataModel extends SimpleCAModel {
 	 */
 	protected void constantBoundary(int i, int j, int C){
 		
-		if (i + 1 == mCellX && j + 1 == mCellY) {
-			se = C ;//mS0[0][0]; //ok
-		}else if (i + 1 == mCellX){
-			se = C; //mS0[j+1][0];
-		}else if (j + 1 == mCellY) {
-			se = C; //mS0[0][i+1];
+		if (i + 1 == this.width && j + 1 == this.height) {
+			se = C ;//this.grid0[0][0]; //ok
+		}else if (i + 1 == this.width){
+			se = C; //this.grid0[j+1][0];
+		}else if (j + 1 == this.height) {
+			se = C; //this.grid0[0][i+1];
 		}else {
-			se = mS0[j + 1][i + 1]; //ok
+			se = this.grid0[j + 1][i + 1]; //ok
 		}
 
 		
-		if (i - 1 < 0 && j + 1 == mCellY) {
-			sw = C; //mS0[0][mCellX - 1]; //ok
+		if (i - 1 < 0 && j + 1 == this.height) {
+			sw = C; //this.grid0[0][this.width - 1]; //ok
 		}else if (i - 1 < 0){
-			sw = C; //mS0[j + 1][mCellX - 1];
-		}else if (j + 1 == mCellY) {
-			sw = C; //mS0[0][i-1];
+			sw = C; //this.grid0[j + 1][this.width - 1];
+		}else if (j + 1 == this.height) {
+			sw = C; //this.grid0[0][i-1];
 		}else {
-			sw = mS0[j + 1][i - 1]; //ok
+			sw = this.grid0[j + 1][i - 1]; //ok
 		}
 
 		
-		if (i + 1 == mCellX && j - 1 < 0) {
-			ne = C; //mS0[mCellY - 1][0];
+		if (i + 1 == this.width && j - 1 < 0) {
+			ne = C; //this.grid0[this.height - 1][0];
 		}else if (j - 1 < 0){
-			ne = C; //mS0[mCellY - 1][i + 1];
-		}else if (i + 1 == mCellX) {
-			ne = C; //mS0[j - 1][0];
+			ne = C; //this.grid0[this.height - 1][i + 1];
+		}else if (i + 1 == this.width) {
+			ne = C; //this.grid0[j - 1][0];
 		}else {
-			ne = mS0[j - 1][i + 1];
+			ne = this.grid0[j - 1][i + 1];
 		}
 		
 		if (i - 1 < 0 && j - 1 < 0) {
-			nw = C; //mS0[mCellY - 1][mCellX - 1];
+			nw = C; //this.grid0[this.height - 1][this.width - 1];
 		}else if (i - 1 < 0){
-			nw = C; //mS0[j - 1][mCellX - 1];
+			nw = C; //this.grid0[j - 1][this.width - 1];
 		}else if (j - 1 < 0) {
-			nw = C; //mS0[mCellY - 1][i - 1];
+			nw = C; //this.grid0[this.height - 1][i - 1];
 		}else {
-			nw = mS0[j - 1][i - 1];
+			nw = this.grid0[j - 1][i - 1];
 		}
 		
 		
 		if (i - 1 < 0) {
-			w = C; //mS0[j][mCellX - 1];
-			e = mS0[j][i + 1];
-		}else if (i + 1 == mCellX) {
-			w = mS0[j][i - 1];
-			e = C; //mS0[j][0];
+			w = C; //this.grid0[j][this.width - 1];
+			e = this.grid0[j][i + 1];
+		}else if (i + 1 == this.width) {
+			w = this.grid0[j][i - 1];
+			e = C; //this.grid0[j][0];
 		}else {
-			w = mS0[j][i - 1];
-			e = mS0[j][i + 1];
+			w = this.grid0[j][i - 1];
+			e = this.grid0[j][i + 1];
 		}	
 		
 		if (j - 1 < 0) {
-			n = C; //mS0[mCellY - 1][i];
-			s = mS0[j + 1][i];
-		}else if (j + 1 == mCellY) {
-			n = C; //mS0[j - 1][i];
-			s = mS0[0][i];
+			n = C; //this.grid0[this.height - 1][i];
+			s = this.grid0[j + 1][i];
+		}else if (j + 1 == this.height) {
+			n = C; //this.grid0[j - 1][i];
+			s = this.grid0[0][i];
 		}else {
-			n = mS0[j - 1][i];
-			s = mS0[j + 1][i];
+			n = this.grid0[j - 1][i];
+			s = this.grid0[j + 1][i];
 		}
 	}//protected void constantBoundary(int i, int j, int C){
 }//public class CellularAutomataModel extends SimpleCAModel 

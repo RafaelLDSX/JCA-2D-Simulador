@@ -51,26 +51,26 @@ public class SegregationModel extends CellularAutomataModel{
 		System.out.print("Probabilities - empty: " + Double.toString(mProbabilities[0]));
 		System.out.print(" - A: " + Double.toString(mProbabilities[1]));
 		System.out.println(" - B: " + Double.toString(mProbabilities[2]));
-		mCAState = CLASS_STATE_INITIAL_CONDITION;
+		this.state = CLASS_STATE_INITIAL_CONDITION;
 		
-		for (int j = 0; j < mCellY; j++)
-			for (int i = 0; i < mCellX; i++) {
+		for (int j = 0; j < this.height; j++)
+			for (int i = 0; i < this.width; i++) {
 				if (Math.random() <= mProbabilities[EMPTY]) {
-					mS0[j][i] = EMPTY;
-					mS1[j][i] = EMPTY;
+					this.grid0[j][i] = EMPTY;
+					this.grid1[j][i] = EMPTY;
 					
 				}else {
 					if (Math.random() <= mProbabilities[CLASS_A]) {
-						mS0[j][i] = CLASS_A;
-						mS1[j][i] = CLASS_A;
+						this.grid0[j][i] = CLASS_A;
+						this.grid1[j][i] = CLASS_A;
 						
 					}else{
-							mS0[j][i] = CLASS_B;
-							mS1[j][i] = CLASS_B;	
+							this.grid0[j][i] = CLASS_B;
+							this.grid1[j][i] = CLASS_B;	
 					}
 						
 				}//if (Math.random() <= mProbabilities[EMPTY]) {
-			}//for (int i = 0; mCellX * mCellY; i++) {
+			}//for (int i = 0; this.width * this.height; i++) {
 		
 	
 	}//public void initialCondition() {

@@ -50,12 +50,12 @@ public class CAModelPy extends SimpleCAModel {
 		else
 			mTitle = new String("Unknow CA model ***");
 		
-		mCellX = 1;
-		mCellY = 1;
-		mTotalStates = 1;
+		this.width = 1;
+		this.height = 1;
+		this.maxCellStates = 1;
 		
-		//mS0 = new int[this.mCellY][this.mCellX];
-		mS1 = new int[this.mCellY][this.mCellX];
+		//this.grid0 = new int[this.this.height][this.this.width];
+		this.grid1 = new int[this.height][this.width];
 		
 		/*
 		mPython.exec("AC = CelularAutomata2D()");
@@ -65,13 +65,13 @@ public class CAModelPy extends SimpleCAModel {
 		else
 			mTitle = new String("Unknow CA model ***");
 		
-		mCellX = 1;
-		mCellY = 1;
-		mTotalStates = 1;
+		this.width = 1;
+		this.height = 1;
+		this.maxCellStates = 1;
 		
-		mS0 = new int[this.mCellY][this.mCellX];
-		mS1 = new int[this.mCellY][this.mCellX];
-		mCAState = CLASS_STATE_INITIAL;
+		this.grid0 = new int[this.this.height][this.this.width];
+		this.grid1 = new int[this.this.height][this.this.width];
+		this.state = CLASS_STATE_INITIAL;
 		*/
 	}
 	public String getTitle() { return mTitle; }
@@ -84,21 +84,21 @@ public class CAModelPy extends SimpleCAModel {
 		
 		mPython.exec("initial()");
 		
-		mCellX = mPython.eval("width").asInt();
-		mCellY = mPython.eval("height").asInt();
-		mTotalStates = mPython.eval("nStates").asInt();
-		mS1 = new int[this.mCellY][this.mCellX];
+		this.width = mPython.eval("width").asInt();
+		this.height = mPython.eval("height").asInt();
+		this.maxCellStates = mPython.eval("nStates").asInt();
+		this.grid1 = new int[this.height][this.width];
 		PyObject ret = mPython.eval("S0");
-		for (int i = 0; i < mCellY; i++) {
-			for (int j = 0; j < mCellX; j++) {
+		for (int i = 0; i < this.height; i++) {
+			for (int j = 0; j < this.width; j++) {
 				int x = ret.__getitem__(i).__getitem__(j).asInt();
-				mS1[i][j] = x;
+				this.grid1[i][j] = x;
 				//System.out.print(Integer.toString(x) + " ");
-			}//for (int j = 0; j < mCellX; j++) {
+			}//for (int j = 0; j < this.width; j++) {
 			//System.out.println("");
-		}//for (int i = 0; i < mCellY; i++) {
+		}//for (int i = 0; i < this.height; i++) {
 		
-		mCAState = CLASS_STATE_INITIAL;
+		this.state = CLASS_STATE_INITIAL;
 
 		
 	}//public void initialCondition() {
@@ -106,7 +106,7 @@ public class CAModelPy extends SimpleCAModel {
 	@Override
 	public void update() {
 		// TODO Auto-generated method stub
-		if ((mCAState != CLASS_STATE_INITIAL) && (mCAState != CLASS_STATE_UPDATE)) {
+		if ((this.state != CLASS_STATE_INITIAL) && (this.state != CLASS_STATE_UPDATE)) {
 			 JOptionPane.showMessageDialog(null,
 		                "A condição inicial não foi definida",
 		                mTitle,
@@ -114,40 +114,40 @@ public class CAModelPy extends SimpleCAModel {
 			return;
 		} 
 		
-		mCAState = CLASS_STATE_UPDATE;
+		this.state = CLASS_STATE_UPDATE;
 		int cont = mPython.eval("executing").asInt();
 		System.out.println("Continue: " + Integer.toString(cont));
-		mPython.set("ts", mTimeStep);
-		mPython.set("states", mS1);
+		mPython.set("ts", this.timeStep);
+		mPython.set("states", this.grid1);
 		mPython.exec("update(ts, states)");
 		PyObject ret = mPython.eval("S1");
-		for (int i = 0; i < mCellY; i++) {
-			for (int j = 0; j < mCellX; j++) {
+		for (int i = 0; i < this.height; i++) {
+			for (int j = 0; j < this.width; j++) {
 				int x = ret.__getitem__(i).__getitem__(j).asInt();
-				mS1[i][j] = x;
+				this.grid1[i][j] = x;
 				//System.out.print(Integer.toString(x) + " ");
-			}//for (int j = 0; j < mCellX; j++) {
+			}//for (int j = 0; j < this.width; j++) {
 			//System.out.println("");
-		}//for (int i = 0; i < mCellY; i++) {
+		}//for (int i = 0; i < this.height; i++) {
 		
-		mTimeStep++;
+		this.timeStep++;
 		
 		/*
 		
 		
-		mPython.set("ts", mTimeStep);
-		mPython.set("A", mS1);
+		mPython.set("ts", this.timeStep);
+		mPython.set("A", this.grid1);
 		PyObject ret = mPython.eval("AC.update(ts, A)");
-		for (int i = 0; i < mCellY; i++) {
-			for (int j = 0; j < mCellX; j++) {
+		for (int i = 0; i < this.height; i++) {
+			for (int j = 0; j < this.width; j++) {
 				int x = ret.__getitem__(i).__getitem__(j).asInt();
-				mS1[i][j] = x;
+				this.grid1[i][j] = x;
 				//System.out.print(Integer.toString(x) + " ");
-			}//for (int j = 0; j < mCellX; j++) {
+			}//for (int j = 0; j < this.width; j++) {
 			//System.out.println("");
-		}//for (int i = 0; i < mCellY; i++) {
+		}//for (int i = 0; i < this.height; i++) {
 		
-		mTimeStep++;
+		this.timeStep++;
 		*/
 	}
 

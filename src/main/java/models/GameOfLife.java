@@ -21,22 +21,22 @@ public class GameOfLife extends CellularAutomataModel {
 	@Override
 	public void initialCondition() {
 		System.out.println("initial condition");
-		mCAState = CLASS_STATE_INITIAL_CONDITION;
+		this.state = CLASS_STATE_INITIAL_CONDITION;
 		mLive.clear();
 		mDead.clear();
 		int clive = 0, cdead = 0;
-		for (int j = 0; j < mCellY; j++)
-			for (int i = 0; i < mCellX; i++) {
+		for (int j = 0; j < this.height; j++)
+			for (int i = 0; i < this.width; i++) {
 				if (Math.random() < 0.25f) {
-					mS0[j][i] = LIVE;
-					mS1[j][i] = LIVE;
+					grid0[j][i] = LIVE;
+					grid1[j][i] = LIVE;
 					clive++;
 				}else {
-					mS0[j][i] = DEAD;
-					mS1[j][i] = DEAD;
+					grid0[j][i] = DEAD;
+					grid1[j][i] = DEAD;
 					cdead++;
 				}
-			}//for (int i = 0; mCellX * mCellY; i++) {
+			}//for (int i = 0; this.width * this.height; i++) {
 		
 		mLive.add(clive);
 		mDead.add(cdead);
@@ -44,8 +44,8 @@ public class GameOfLife extends CellularAutomataModel {
 	
 	@Override
 	public void update() {
-		if (mCAState == CLASS_STATE_INITIAL_CONDITION)
-			mCAState = CLASS_STATE_UPDATE;
+		if (this.state == CLASS_STATE_INITIAL_CONDITION)
+			this.state = CLASS_STATE_UPDATE;
 		int sum;
 	    /*
         nw | n | ne
@@ -55,11 +55,11 @@ public class GameOfLife extends CellularAutomataModel {
         sw | s | se
 	     */	
 		int a = 0, b = 0;
-		for (int j = 0; j < mCellY; j++) {
-			for (int i = 0; i < mCellX; i++) {
+		for (int j = 0; j < this.height; j++) {
+			for (int i = 0; i < this.width; i++) {
 				nw = n = ne = w = e = sw = s =  se = c = -1;
 				sum = 0;
-				c = mS0[j][i];
+				c = this.grid0[j][i];
 				
 				if (mBoundary.compareTo("periodic") == 0) periodicBoundary(i, j);
 				else if (mBoundary.compareTo("reflexive") == 0) reflexiveBoundary(i, j);
@@ -79,19 +79,19 @@ public class GameOfLife extends CellularAutomataModel {
 				
 				sum = nw + n + ne + w + e + sw + s + se;
 				if ((sum == 3) && (c == 0)) {
-	            	  mS1[j][i] = LIVE;
+	            	  this.grid1[j][i] = LIVE;
 	            	  a++;
 				}else if ((sum >= 2) && (sum <= 3) && (c == 1)) {
-	            	  mS1[j][i] = LIVE;
+	            	  this.grid1[j][i] = LIVE;
 	            	  a++;
 				}else {
-	            	  mS1[j][i] = DEAD;
+	            	  this.grid1[j][i] = DEAD;
 	            	  b++;
 				}
 			
 				
-			}//for (int i = 0; i < mCellX; i++) {
-		}//for (int j = 0; j < mCellX; j++) {
+			}//for (int i = 0; i < this.width; i++) {
+		}//for (int j = 0; j < this.width; j++) {
 		super.update();
 		mLive.add(a);
 		mDead.add(b);
@@ -112,7 +112,7 @@ public class GameOfLife extends CellularAutomataModel {
 		if (i < 1) {
 			s = new String("Game of Life ");
 			s += "is a Cellular Automata or Cellular Automaton - CA - which represents artificial life form. \n";
-			s += "\t In this instance the lattice has size (" + Integer.toString(mCellX) + "," + Integer.toString(mCellY) + ")\n";
+			s += "\t In this instance the lattice has size (" + Integer.toString(this.width) + "," + Integer.toString(this.height) + ")\n";
 			s += "\t Moore is the neighborhood adopted\n";
 			s += "\t Although initial state is random, the transition rule is deterministic and uses periodic boundary condition\n";
 			s += "======================================================================================================================\n";
@@ -128,9 +128,9 @@ public class GameOfLife extends CellularAutomataModel {
 			int ones = 0;
 			int zeros = 0;
 			s = new String("");
-			for (int j = 0; j < mCellY; j++) {
-				for (int ii = 0; ii < mCellX; ii++) {
-					int state = mS0[j][ii];
+			for (int j = 0; j < this.height; j++) {
+				for (int ii = 0; ii < this.width; ii++) {
+					int state = this.grid0[j][ii];
 					if (state == 1) {
 						s += "#";
 						ones++;
@@ -139,12 +139,12 @@ public class GameOfLife extends CellularAutomataModel {
 						s += "_";
 						zeros++;
 					}
-				}//for (int i = 0; mCellX * mCellY; i++) {
+				}//for (int i = 0; this.width * this.height; i++) {
 				s += "\n";
-			}//for (int j = 0; j < mCellY; j++) {
+			}//for (int j = 0; j < this.height; j++) {
 			s += "======================================================================================================================\n";
-			s += "\t Dead cells: " + Integer.toString(zeros) + "\t" + Double.toString(((double) zeros / (double) (mCellX*mCellY)) * 100.0f) + "% \n";
-			s += "\tAlive cells: " + Integer.toString(ones) + "\t" + Double.toString(((double) ones / (double) (mCellX*mCellY)) * 100.0f) + "% \n";
+			s += "\t Dead cells: " + Integer.toString(zeros) + "\t" + Double.toString(((double) zeros / (double) (this.width*this.height)) * 100.0f) + "% \n";
+			s += "\tAlive cells: " + Integer.toString(ones) + "\t" + Double.toString(((double) ones / (double) (this.width*this.height)) * 100.0f) + "% \n";
 			
 		}
 		
