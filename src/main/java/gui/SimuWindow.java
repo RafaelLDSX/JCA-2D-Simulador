@@ -544,12 +544,12 @@ public class SimuWindow extends JInternalFrame{
             
                 
                 case NEXT_STEP://	JOptionPane.showMessageDialog(null,"next step","TITULO", JOptionPane.INFORMATION_MESSAGE);
-                		if (mCA != null) {
-                			mCA.update();
-                    		mGUICA.repaint();	
-                		}
-                		
+            		if (mCA != null) {
+            			mCA.update();
+                		mGUICA.repaint();	
+            		}	
                 	break;
+                	
                 case RUN_CA:
                 	if (mCA != null) {
                 		runSimulationFG();	
@@ -564,6 +564,7 @@ public class SimuWindow extends JInternalFrame{
             		}
                 	
                 	break;
+                	
                 case MODEL_CA_BG:
                 	runSimulationBG();
                 	/*
@@ -575,11 +576,23 @@ public class SimuWindow extends JInternalFrame{
                 	break;
                 	
                 case LOAD_STATE:
+                	try {
+                		mCA.loadState();
+                		mGUICA.repaint();
+                	} catch (IOException exception) {
+                		System.out.println("Error saving state.");
+                		exception.printStackTrace();
+                	}
                 	break;
                 	
                 case SAVE_STATE:
-                	String fileName = "placeholder";
-                	mCA.saveState(fileName);
+                	try {
+                		mCA.saveState();
+                	} catch (IOException exception) {
+                		System.out.println("Error saving state.");
+                		exception.printStackTrace();
+                	}
+                	
                 	break;
                 	
                 //case 4:JOptionPane.showMessageDialog(null,"MENSAGEM AQUI","TITULO", JOptionPane.INFORMATION_MESSAGE);;break;

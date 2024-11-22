@@ -1,18 +1,9 @@
 package models;
 
-import java.io.File;
+import javax.swing.JOptionPane;
 
 import org.python.core.PyObject;
 import org.python.util.PythonInterpreter;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Properties;
-
-import javax.swing.JOptionPane;
 
 public class CAModelPy extends SimpleCAModel {
 	protected String mTitle = null;

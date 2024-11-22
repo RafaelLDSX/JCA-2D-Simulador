@@ -1,7 +1,13 @@
 package models;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class SimpleCAModel implements logic.CellularAutomataInterface {
 	protected static final int CLASS_STATE_NOT_DEFINED                  = -1;
@@ -108,23 +114,50 @@ public class SimpleCAModel implements logic.CellularAutomataInterface {
 	
 	public String getLogBasedOnLayer(int i) { return "LOG OF CURRENT STATE"; }
 	
-	public void saveState(String fileName) { 
-		try{
-			File save = new File(fileName + ".dat");
-			save.createNewFile();
-			FileWriter writer = new FileWriter(save);
-			for(int i = 0; i < width; i++) {
-				for(int j = 0; j < height; j++) {
-					writer.write(Integer.toString(grid0[i][j]));
-				}
-			}
-			writer.close();
-		} catch (Exception e){
-			System.out.println("Error saving state.");
-			e.printStackTrace();
-		}
+	public void saveState() throws IOException{ 
+		JFileChooser fileChooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivo .dat", "dat");
+    	fileChooser.setFileFilter(filter);
+    	fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+    	
+    	if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+    		System.out.println("Arquivo selecionado.");
+    		File file = fileChooser.getSelectedFile();
+    		
+    		//excluding extra ".dat" if it exists
+    		FileWriter writer = new FileWriter(file.getName().contains(".dat") ? file.getName() : file + ".dat");
+    		for(int i = 0; i < width; i++) {
+    			for(int j = 0; j < height; j++) {
+    				writer.write(Integer.toString(grid0[i][j]));
+    			}
+    		}
+    		writer.flush();
+    		writer.close();
+    	}
+		
 	}
 	
-	public void loadState() { }
+	public void loadState() throws IOException{
+		BufferedReader reader;
+		JFileChooser fileChooser = new JFileChooser();
+		FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivo .dat", "dat");
+    	fileChooser.setFileFilter(filter);
+    	fileChooser.setCurrentDirectory(new File(System.getProperty("user.home")));
+    	
+    	if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+    		System.out.println("File selected to load.");
+    		File file = fileChooser.getSelectedFile();
+    		reader = new BufferedReader(new FileReader(file));
+    		char[] cellStates = new char[width * height];
+    		reader.read(cellStates);
+    		for(int i = 0; i < this.width; i++) {
+    			for(int j = 0; j < this.height; j++) {
+    				this.grid0[i][j] = Character.getNumericValue(cellStates[j + i * width]);
+    				this.grid1[i][j] = Character.getNumericValue(cellStates[j + i * width]);
+    			}
+    		}
+    		reader.close();
+    	}
+	}
 
 }
