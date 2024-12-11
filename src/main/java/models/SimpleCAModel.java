@@ -68,9 +68,7 @@ public class SimpleCAModel implements logic.CellularAutomataInterface {
 		 this.timeStep++;
 		 for (int j = 0; j < this.height; j++)
 			 for (int i = 0; i < this.width; i++) {
-				 int swp = this.grid1[j][i];
-				 this.grid1[j][i] = this.grid0[j][i];
-				 this.grid0[j][i] = swp;
+				 this.grid0[j][i] = this.grid1[j][i];
 			 }
 		 	
 	}
