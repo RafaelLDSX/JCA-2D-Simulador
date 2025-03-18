@@ -1,4 +1,6 @@
-package models;
+package models.socialNetwork;
+
+import models.CellularAutomataModel;
 
 public class SocialNetwork extends CellularAutomataModel{
 
