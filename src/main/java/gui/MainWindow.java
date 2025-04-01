@@ -33,12 +33,13 @@ import javax.swing.text.NumberFormatter;
 
 import models.CAModelPy;
 import models.SegregationModel;
+import models.socialNetwork.SocialNetwork;
 /**
  * 
  */
 public class MainWindow  extends JFrame {
 		private static final int BOUNDARY = 50;
-		private static final int ITENS  = 9;
+		private static final int ITENS  = 10;
 		
 		 
 		private static final int EXIT_CLOSE				= 0;
@@ -51,6 +52,7 @@ public class MainWindow  extends JFrame {
 		public static final int LOAD_MODEL_PY      		= 6;
 		public static final int NATIVE_SIMULATION       = 7;
 		public static final int SEGREGATION_2           = 8;
+		public static final int SOCIAL_NETWORK			= 9;
 		
 	    private JPanel   mPanel   = null;
 	    private JMenuBar mMenuBar = null;
@@ -139,6 +141,11 @@ public class MainWindow  extends JFrame {
             mMenuItem = new JMenuItem("Segregation two-classes");
             mMenuItem.addActionListener(menuEvent);
             mMenuHash[SEGREGATION_2] = mMenuItem.hashCode();
+            mSubmenu.add(mMenuItem);
+            
+            mMenuItem = new JMenuItem("Social Network");
+            mMenuItem.addActionListener(menuEvent);
+            mMenuHash[SOCIAL_NETWORK] = mMenuItem.hashCode();
             mSubmenu.add(mMenuItem);
             
             mMenu.add(mSubmenu);
@@ -325,6 +332,10 @@ public class MainWindow  extends JFrame {
 */	 
     	}//public void call_segregation_2() {
     	
+    	private void call_social_network() {
+    		SocialNetwork social = new SocialNetwork();
+    		social.loadConfig("config.json");
+    	}
 
     	
     	/*
@@ -385,6 +396,7 @@ public class MainWindow  extends JFrame {
                 case GAME_OF_LIFE:call_game_of_life();break;
                 case PRISONERS_DILEMMA:JOptionPane.showMessageDialog(null,"PRISONERS_DILEMMA","TITULO", JOptionPane.INFORMATION_MESSAGE);break;
                 case PREDATOR_PREY:JOptionPane.showMessageDialog(null,"PREDATOR_PREY","TITULO", JOptionPane.INFORMATION_MESSAGE);break;
+                case SOCIAL_NETWORK:call_social_network();break;
                     //case 4:JOptionPane.showMessageDialog(null,"MENSAGEM AQUI","TITULO", JOptionPane.INFORMATION_MESSAGE);;break;
 
                 }
