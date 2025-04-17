@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.concurrent.ThreadLocalRandom;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -46,7 +47,12 @@ public class SocialNetwork extends CellularAutomataModel{
 	public void initialCondition() {
 		System.out.println("initial condition");
 		this.state = CLASS_STATE_INITIAL_CONDITION;
+		double uniform = ThreadLocalRandom.current().nextDouble(0.0, 1.0);
 		
+		double normalSample = ThreadLocalRandom.current().nextGaussian();
+        double alphaRumor = Math.exp(this.alphaRumorMI + this.alphaRumorSIG * normalSample);
+        normalSample = ThreadLocalRandom.current().nextGaussian();
+        double gammaRumor = Math.exp(this.gammaRumorMI + this.gammaRumorSIG * normalSample);
 		
 	}
 	
