@@ -1,11 +1,17 @@
 package models.socialNetwork;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.jgrapht.Graph;
+import org.jgrapht.graph.DefaultDirectedGraph;
+import org.jgrapht.graph.DefaultEdge;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -36,10 +42,13 @@ public class SocialNetwork extends CellularAutomataModel{
 	private String infectedOrder;
 	private int timesteps;
 	
+	private List<Agent> agents;
+	
 	
 	public SocialNetwork() {
 		
 		this.maxCellStates = 5;
+		this.agents = new ArrayList<Agent>();
 		
 	}
 	
@@ -53,7 +62,40 @@ public class SocialNetwork extends CellularAutomataModel{
         double alphaRumor = Math.exp(this.alphaRumorMI + this.alphaRumorSIG * normalSample);
         normalSample = ThreadLocalRandom.current().nextGaussian();
         double gammaRumor = Math.exp(this.gammaRumorMI + this.gammaRumorSIG * normalSample);
-		
+        
+        Graph<Agent, DefaultEdge> graph = new DefaultDirectedGraph<>(DefaultEdge.class);
+        int numberOfVertices;
+        
+        try (BufferedReader reader = new BufferedReader(new FileReader("BA-N-10-P-1-C-6.net"))) {
+            String line;
+            line = reader.readLine();
+            if (line.startsWith("*Vertices")) {
+                // separa a string por espaços
+                String[] tokens = line.split("\\s+");
+                if (tokens.length > 1) {
+                    numberOfVertices = Integer.parseInt(tokens[1]);
+                    for (int i = 0; i < numberOfVertices; i++) {
+                    	Agent x = new Agent();
+                    	this.agents.add(x);
+                    	graph.addVertex(x);
+                    }
+                }
+            }
+            line = reader.readLine();
+            if (line.startsWith("*Arcs")) {
+            	Agent auxAgent1, auxAgent2;
+            	while ((line = reader.readLine()) != null) {
+            		String[] indexes = line.split("\\s+");
+            		auxAgent1 = this.agents.get(Integer.parseInt(indexes[0]));
+            		auxAgent2 = this.agents.get(Integer.parseInt(indexes[1]));
+            		graph.addEdge(auxAgent1, auxAgent2);		
+            		
+            	}
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        
 	}
 	
 	public void loadConfig(String fileName) {

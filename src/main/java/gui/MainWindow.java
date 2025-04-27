@@ -335,6 +335,7 @@ public class MainWindow  extends JFrame {
     	private void call_social_network() {
     		SocialNetwork social = new SocialNetwork();
     		social.loadConfig("config.json");
+    		social.initialCondition();
     	}
 
     	
