@@ -6,8 +6,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 import org.jgrapht.Graph;
 import org.jgrapht.graph.DefaultDirectedGraph;
@@ -86,8 +89,8 @@ public class SocialNetwork extends CellularAutomataModel{
             	Agent auxAgent1, auxAgent2;
             	while ((line = reader.readLine()) != null) {
             		String[] indexes = line.split("\\s+");
-            		auxAgent1 = this.agents.get(Integer.parseInt(indexes[0]));
-            		auxAgent2 = this.agents.get(Integer.parseInt(indexes[1]));
+            		auxAgent1 = this.agents.get(Integer.parseInt(indexes[0]) - 1);
+            		auxAgent2 = this.agents.get(Integer.parseInt(indexes[1]) - 1);
             		graph.addEdge(auxAgent1, auxAgent2);		
             		
             	}
@@ -95,6 +98,16 @@ public class SocialNetwork extends CellularAutomataModel{
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
+        Agent maxInDegreeAgent = agents.stream().max(Comparator.comparing(x -> graph.inDegreeOf(x))).get();
+        Agent maxOutDegreeAgent = agents.stream().max(Comparator.comparing(x -> graph.outDegreeOf(x))).get();
+        this.maxInDegree = graph.inDegreeOf(maxInDegreeAgent);
+        this.maxOutDegree = graph.outDegreeOf(maxOutDegreeAgent);
+        
+        double totalInDegree = agents.stream().collect(Collectors.summingInt(x -> graph.inDegreeOf(x)));
+        double totalOutDegree = agents.stream().collect(Collectors.summingInt(x -> graph.outDegreeOf(x)));
+        this.averageInDegree = totalInDegree / agents.size();
+        this.averageOutDegree = totalOutDegree / agents.size();
         
 	}
 	
