@@ -109,6 +109,13 @@ public class SocialNetwork extends CellularAutomataModel{
         this.averageInDegree = totalInDegree / agents.size();
         this.averageOutDegree = totalOutDegree / agents.size();
         
+        double[] probabilities = new double[agents.size()];
+        double add = 0;
+        for(int i = 0; i < agents.size(); i++) {
+        	add += graph.inDegreeOf(agents.get(i)) / totalInDegree;
+        	probabilities[i] = add;
+        }
+        
 	}
 	
 	public void loadConfig(String fileName) {
