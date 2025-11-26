@@ -79,6 +79,7 @@ public class SocialNetwork extends CellularAutomataModel{
                     numberOfVertices = Integer.parseInt(tokens[1]);
                     for (int i = 0; i < numberOfVertices; i++) {
                     	Agent x = new Agent();
+                    	x.setStates(State.SUSCEPTIBLE);
                     	this.agents.add(x);
                     	graph.addVertex(x);
                     }
@@ -124,6 +125,32 @@ public class SocialNetwork extends CellularAutomataModel{
         else {
         	numberOfInfected = Math.floor(this.infectionProbability);
         }
+        
+        if (numberOfInfected == 0)
+        	numberOfInfected = 1;
+        
+        if (this.infectedOrder == "rand") {
+        	for (int i = 0; i < numberOfInfected; i++) {
+        		boolean selected = false;
+        		
+        		do {
+        			double p = ThreadLocalRandom.current().nextDouble(0.0, 1.0);
+            		add = probabilities[0];
+            		int j = 1;
+            		while (p > add) {
+            			add = probabilities[j++];
+            		}
+            		j--;
+            		if (agents.get(j).state0 == State.SUSCEPTIBLE) {
+            			agents.get(j).setStates(State.INFECTED);
+            			selected = true;
+            		}
+        		} while (!selected);
+        		
+        	}
+        }
+        
+        
         
 	}
 	
