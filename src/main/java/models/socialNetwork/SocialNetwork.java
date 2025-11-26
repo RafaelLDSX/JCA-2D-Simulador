@@ -41,7 +41,7 @@ public class SocialNetwork extends CellularAutomataModel{
 	private double maxInDegree;
 	private double averageInDegree;
 	
-	private double infected;
+	private double infectionProbability;
 	private String infectedOrder;
 	private int timesteps;
 	
@@ -116,6 +116,15 @@ public class SocialNetwork extends CellularAutomataModel{
         	probabilities[i] = add;
         }
         
+        double numberOfInfected;
+        
+        if (this.infectionProbability < 1.0) {
+        	numberOfInfected = Math.floor(this.infectionProbability * agents.size());
+        }
+        else {
+        	numberOfInfected = Math.floor(this.infectionProbability);
+        }
+        
 	}
 	
 	public void loadConfig(String fileName) {
@@ -128,7 +137,7 @@ public class SocialNetwork extends CellularAutomataModel{
 			 
 			 this.width = ((Long) json.get("cell-x")).intValue();
 			 this.height = ((Long) json.get("cell-y")).intValue();
-			 this.infected = (double) json.get("infected");
+			 this.infectionProbability = (double) json.get("infected");
 			 this.infectedOrder = (String) json.get("infected_init_order");
 			 this.timesteps = ((Long) json.get("timesteps")).intValue();
 			 this.alphaRumorMI = (double) json.get("alpha-rumor-mi");
