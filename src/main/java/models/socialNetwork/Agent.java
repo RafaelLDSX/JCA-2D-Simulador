@@ -13,10 +13,15 @@ public class Agent {
 		this.outAgents = new ArrayList<Agent>();
 	}
 	
-	private int id;
-	private State state0;
-	private State state1;
-	private List<Agent> inAgents;
-	private List<Agent> outAgents;
+	public int id;
+	public State state0;
+	public State state1;
+	public List<Agent> inAgents;
+	public List<Agent> outAgents;
+	
+	public void setStates(State s) {
+		this.state0 = s;
+		this.state1 = s;
+	}
 	
 }
