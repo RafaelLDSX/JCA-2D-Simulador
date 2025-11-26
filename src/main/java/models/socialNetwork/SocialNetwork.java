@@ -30,6 +30,7 @@ public class SocialNetwork extends CellularAutomataModel{
 	private double averageGamma;
 	private double epsilon;
 	private double averageEpsilon;
+	private double lambda;
 	
 	private double alphaRumorMI;
 	private double alphaRumorSIG;
@@ -148,10 +149,31 @@ public class SocialNetwork extends CellularAutomataModel{
         		} while (!selected);
         		
         	}
-        }
-        
-        
-        
+        } else {
+        	// fazer infecção por ordem crescente e decrescente
+        }  
+	}
+	
+	public void exec() {
+		
+	}
+	
+	public void update(int t) {
+		
+	}
+	
+	double buildEpsilon(long node, long iTime) {
+	    double dTime = (double) iTime;
+	    double epsilon = 1.0 - Math.exp(-this.lambda * dTime);
+
+	    if (Double.isNaN(epsilon)) {
+	        throw new AssertionError("epsilon is NaN");
+	    }
+	    if (Double.isInfinite(epsilon)) {
+	        throw new AssertionError("epsilon is Infinite");
+	    }
+
+	    return epsilon;
 	}
 	
 	public void loadConfig(String fileName) {
@@ -171,6 +193,7 @@ public class SocialNetwork extends CellularAutomataModel{
 			 this.alphaRumorSIG = (double) json.get("alpha-rumor-sig");
 			 this.gammaRumorMI = (double) json.get("gamma-rumor-mi");
 			 this.gammaRumorSIG = (double) json.get("gamma-rumor-sig");
+			 this.lambda = (double) json.get("lambda");
 			 
 			 
 		 } catch (FileNotFoundException e) {
