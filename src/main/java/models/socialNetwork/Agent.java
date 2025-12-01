@@ -16,7 +16,6 @@ public class Agent {
 	public int id;
 	public State state0;
 	public State state1;
-	public State state;
 	public List<Agent> inAgents;
 	public List<Agent> outAgents;
 	
@@ -31,5 +30,9 @@ public class Agent {
 	
 	public void setState(State s) {
 		this.state1 = s;
+	}
+	
+	public void update() {
+		this.state0 = this.state1;
 	}
 }
